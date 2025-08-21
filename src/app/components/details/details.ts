@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Housing } from '../../housing';
 import { HousingLocationInfo } from '../../housinglocation';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { HousingLocation } from '../housing-location/housing-location';
 
 @Component({
   selector: 'app-details',
@@ -24,8 +25,10 @@ export class Details {
   });
 
   constructor() {
-    this.housingLocationId = Number(this.route.snapshot.params['id']);
-    this.housingLocation = this.housingService.getHousingLocationById(this.housingLocationId);
+    const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
+    this.housingService.getHousingLocationById(housingLocationId).then((housingLocation) => {
+      this.housingLocation = housingLocation;
+    });
   }
 
   submitApplication() {
